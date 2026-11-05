@@ -4,6 +4,13 @@
   "accent": "#715943",
   "entries": [
     {
+      "date": "2026-11-05",
+      "state": "Publicado / Published",
+      "title": "Site no GitHub Pages · Website on GitHub Pages",
+      "pt": "O site público e as notas de desenvolvimento agora são publicados no GitHub Pages, em um repositório exclusivo para os arquivos públicos da página. O endereço anterior no ChatGPT redireciona para este site. A hospedagem do site fica independente da implementação do produto.",
+      "en": "The public website and development notes are now published on GitHub Pages, in a repository containing public website artifacts only. The former ChatGPT address redirects here. Website hosting is independent of the product implementation."
+    },
+    {
       "date": "2026-11-04",
       "state": "Direção confirmada / Confirmed direction",
       "title": "Cognição como produto comercial · Cognition as a commercial product",
