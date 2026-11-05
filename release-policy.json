@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "artificial-culture": { "baseline": "0.2.0", "label": "Artificial Culture" },
+    "artificial-culture-site": { "baseline": "0.0.0", "label": "Site" }
+  }
+}

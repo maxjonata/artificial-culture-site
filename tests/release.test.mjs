@@ -1,0 +1,16 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { parseCommit, collectReleases, validateRelease, toEntry } from '../scripts/release.mjs';
+const projects = { 'artificial-culture':{baseline:'0.2.0',label:'Artificial Culture'} };
+const valid = () => ({schema_version:1,project:'artificial-culture',version:'0.3.0',kind:'minor',date:'2026-11-05',public:true,state:'experimental',pt:{title:'Memória',changes:['Um comportamento mudou.'],limitations:['Cenário controlado.']},en:{title:'Memory',changes:['A behavior changed.'],limitations:['Controlled scenario.']}});
+const commit = n => `release(${n.project}): v${n.version}\n\nPrivate details outside the block.\n\n\`\`\`patch-notes\n${JSON.stringify(n)}\n\`\`\``;
+test('extracts only the explicit public block',()=>{const n=valid();assert.deepEqual(parseCommit(commit(n),projects),n);assert(!JSON.stringify(toEntry(n,projects)).includes('Private details'));});
+test('ordinary commits do not become announcements',()=>assert.equal(parseCommit('fix: movement',projects),null));
+test('rejects missing, duplicate and malformed blocks',()=>{assert.throws(()=>parseCommit('release(artificial-culture): v0.3.0',projects));assert.throws(()=>parseCommit(commit(valid())+'\n\n```patch-notes\n{}\n```',projects));assert.throws(()=>parseCommit('release(artificial-culture): v0.3.0\n```patch-notes\ninvalid\n```',projects));});
+test('subject must agree with the public version',()=>assert.throws(()=>parseCommit(commit(valid()).replace('v0.3.0','v0.4.0'),projects)));
+test('rejects unknown projects, private payloads and extra fields',()=>{for(const extra of [{project:'../../secret'},{public:false},{internal_log:'private'}])assert.throws(()=>validateRelease({...valid(),...extra},projects));});
+test('requires both languages, changes and limits',()=>{for(const extra of [{en:null},{pt:{...valid().pt,limitations:[]}},{state:'finished'}])assert.throws(()=>validateRelease({...valid(),...extra},projects));});
+test('rejects invalid calendar dates and unstable versions',()=>{assert.throws(()=>validateRelease({...valid(),date:'2026-02-30'},projects));assert.throws(()=>validateRelease({...valid(),version:'1.2.3-beta'},projects));});
+test('identical replay is idempotent and conflicting replay fails',()=>{assert.equal(collectReleases([valid(),valid()],projects).length,1);assert.throws(()=>collectReleases([valid(),{...valid(),state:'planned'}],projects));});
+test('orders versions numerically and rejects patch-only or wrong kind',()=>{assert.equal(collectReleases([valid(),{...valid(),version:'0.10.0'}],projects)[0].version,'0.10.0');assert.throws(()=>collectReleases([{...valid(),version:'0.2.1'}],projects));assert.throws(()=>collectReleases([{...valid(),kind:'major'}],projects));});
+test('accepts a major release independently from another project',()=>assert.equal(collectReleases([{...valid(),version:'1.0.0',kind:'major'}],projects).length,1));

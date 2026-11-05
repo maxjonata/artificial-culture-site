@@ -1,0 +1,17 @@
+release(<project>): v<MAJOR.MINOR.PATCH>
+
+Optional technical description (not copied to the website).
+
+```patch-notes
+{
+  "schema_version": 1,
+  "project": "<project>",
+  "version": "<MAJOR.MINOR.PATCH>",
+  "kind": "<major|minor>",
+  "date": "<YYYY-MM-DD>",
+  "public": true,
+  "state": "<implemented|experimental|planned|mixed>",
+  "pt": { "title": "<Título público>", "changes": ["<Comportamento novo>"], "limitations": ["<Limites>"] },
+  "en": { "title": "<Public title>", "changes": ["<New behavior>"], "limitations": ["<Limitations>"] }
+}
+```

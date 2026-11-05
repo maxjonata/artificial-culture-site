@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "project": "artificial-culture-site",
+  "version": "1.0.0",
+  "kind": "major",
+  "date": "2026-11-05",
+  "public": true,
+  "state": "implemented",
+  "pt": {
+    "title": "Publicação e notas de versão automatizadas",
+    "changes": ["O site público passa a ter um pipeline de testes, validação de notas e publicação no GitHub Pages.", "Commits de versões major e minor usam uma seção pública específica para gerar notas bilíngues com comportamento e limitações."],
+    "limitations": ["Esta versão identifica a infraestrutura do site e não uma nova versão jogável do produto.", "O envio automático a partir de um repositório de produto separado exige uma credencial restrita ao site; compilar e testar o produto continua sendo responsabilidade do CI desse produto."]
+  },
+  "en": {
+    "title": "Automated publishing and release notes",
+    "changes": ["The public website now has a pipeline for tests, release-note validation and GitHub Pages deployment.", "Major and minor release commits use an explicit public section to generate bilingual notes describing behavior and limitations."],
+    "limitations": ["This version identifies website infrastructure, not a new playable product release.", "Automatic submission from a separate product repository needs a website-scoped credential; product compilation and tests remain the responsibility of that product CI."]
+  }
+}
