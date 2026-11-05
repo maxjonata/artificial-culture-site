@@ -1,0 +1,28 @@
+{
+  "name": "Artificial Culture",
+  "theme": "#ece3d6",
+  "accent": "#715943",
+  "entries": [
+    {
+      "date": "2026-11-04",
+      "state": "Direção confirmada / Confirmed direction",
+      "title": "Cognição como produto comercial · Cognition as a commercial product",
+      "pt": "Artificial Culture é um produto comercial fechado da Sympath e subprojeto de GotH. A documentação pública explica comportamentos e limites sem depender de acesso ao código-fonte.",
+      "en": "Artificial Culture is a closed commercial Sympath product and GotH subproject. Public documentation explains behaviors and limitations independently of source-code access."
+    },
+    {
+      "date": "2026-10-28",
+      "state": "Experimento local / Local experiment",
+      "title": "Uma necessidade, uma decisão, um resultado · One need, one decision, one outcome",
+      "pt": "Um NPC com sede recebe uma observação permitida de água, propõe buscá-la e só atualiza sua satisfação após o GotH confirmar a ação. O piloto entre processos usa WebSocket local. A cognição decide intenções; o GotH valida alcance, disponibilidade e consumo. Reconexão, autenticação e escala ainda precisam ser demonstradas.",
+      "en": "A thirsty NPC receives a permitted water observation, proposes seeking it and updates satisfaction only after GotH confirms the outcome. The cross-process pilot uses local WebSocket. Cognition proposes; GotH validates reach, availability and consumption. Reconnection, authentication and scale remain to be demonstrated."
+    },
+    {
+      "date": "2026-10-28",
+      "state": "Cenário controlado / Controlled scenario",
+      "title": "Lembranças e relatos parciais · Partial memories and testimony",
+      "pt": "O núcleo mantém lembranças por NPC e versões atribuídas de relatos. Uma conversa confirmada pode criar memória social; propostas rejeitadas pelo mundo não contam como conversa ocorrida. Cenários controlados verificam esse contrato e escolhas posteriores. Isso não comprova realismo cultural nem uma sociedade completa.",
+      "en": "The core keeps per-NPC memories and attributed testimony versions. A confirmed exchange can create social memory; a world-rejected proposal does not count as a conversation. Controlled scenarios exercise the contract and subsequent choices. This does not establish cultural realism or a complete society."
+    }
+  ]
+}
