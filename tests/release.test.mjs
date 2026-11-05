@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseCommit, collectReleases, validateRelease, toEntry } from '../scripts/release.mjs';
+import { parseCommit, collectReleases, validateRelease, toEntry, validateReleaseChanges } from '../scripts/release.mjs';
 const projects = { 'artificial-culture':{baseline:'0.2.0',label:'Artificial Culture'} };
 const valid = () => ({schema_version:1,project:'artificial-culture',version:'0.3.0',kind:'minor',date:'2026-11-05',public:true,state:'experimental',pt:{title:'Memória',changes:['Um comportamento mudou.'],limitations:['Cenário controlado.']},en:{title:'Memory',changes:['A behavior changed.'],limitations:['Controlled scenario.']}});
 const commit = n => `release(${n.project}): v${n.version}\n\nPrivate details outside the block.\n\n\`\`\`patch-notes\n${JSON.stringify(n)}\n\`\`\``;
@@ -14,3 +14,5 @@ test('rejects invalid calendar dates and unstable versions',()=>{assert.throws((
 test('identical replay is idempotent and conflicting replay fails',()=>{assert.equal(collectReleases([valid(),valid()],projects).length,1);assert.throws(()=>collectReleases([valid(),{...valid(),state:'planned'}],projects));});
 test('orders versions numerically and rejects patch-only or wrong kind',()=>{assert.equal(collectReleases([valid(),{...valid(),version:'0.10.0'}],projects)[0].version,'0.10.0');assert.throws(()=>collectReleases([{...valid(),version:'0.2.1'}],projects));assert.throws(()=>collectReleases([{...valid(),kind:'major'}],projects));});
 test('accepts a major release independently from another project',()=>assert.equal(collectReleases([{...valid(),version:'1.0.0',kind:'major'}],projects).length,1));
+test('new note files require a matching public release commit',()=>{validateReleaseChanges('A\treleases/artificial-culture/v0.3.0.json',[valid()]);assert.throws(()=>validateReleaseChanges('A\treleases/artificial-culture/v0.3.0.json',[]));});
+test('published notes cannot be edited, deleted or renamed',()=>{for(const code of ['M','D','R100'])assert.throws(()=>validateReleaseChanges(code+'\treleases/artificial-culture/v0.3.0.json',[valid()]));});

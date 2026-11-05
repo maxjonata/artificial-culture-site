@@ -75,6 +75,15 @@ export function collectReleases(notes, projects) {
   }
   return [...unique.values()].sort((a,b) => b.date.localeCompare(a.date) || a.project.localeCompare(b.project) || compare(b.version,a.version));
 }
+export function validateReleaseChanges(changes, notes) {
+  for (const line of changes.split('\n').filter(Boolean)) {
+    assert(line.startsWith('A\t'), 'published release files are immutable');
+    const file = line.slice(2);
+    const match = /^releases\/([a-z0-9-]+)\/v(\d+\.\d+\.\d+)\.json$/.exec(file);
+    assert(match, 'unexpected release file path');
+    assert(notes.some(n => n.project === match[1] && n.version === match[2]), 'new release file requires a matching release commit with public patch notes');
+  }
+}
 const states = { implemented:'Implementado / Implemented', experimental:'Experimental', planned:'Planejado / Planned', mixed:'Entrega parcial / Partial delivery' };
 export function toEntry(note, projects) {
   const entry = { release_key: `${note.project}@${note.version}`, project:note.project, version:note.version, kind:note.kind,
